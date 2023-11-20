@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--开启扫描包-->
+    <context:component-scan base-package="com.ssm"></context:component-scan>
+
+    <!--读取web配置文件-->
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
+
+    <!--注册数据源实例-->
+    <bean id="basicDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <!--注入源数据-->
+        <property name="url" value="${db.url}"></property>
+        <property name="driverClassName" value="${db.driver}"></property>
+        <property name="username" value="${db.username}"></property>
+        <property name="password" value="${db.password}"></property>
+    </bean>
+    <!--注册mybatis工厂对象-->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--注入数据源对象-->
+        <property name="dataSource" ref="basicDataSource"></property>
+        <!--指定映射文件的位置-->
+        <property name="mapperLocations" value="classpath:com.ssm/mapper/*.xml"/>
+    </bean>
+    <!--mybatis的扫描器-->
+    <!--
+        扫描持久层包下所有的接口，并且通过反射创建对应的实现类，将代理出来的实现类装配到核心容器中
+    -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定持久层包的位置-->
+        <property name="basePackage" value="com.ssm.mapper"/>
+    </bean>
+</beans>

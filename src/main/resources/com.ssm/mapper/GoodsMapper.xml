@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--根标签-->
+<mapper namespace="com.ssm.mapper.GoodsMapper">
+<!--
+    mapper接口和映射文件要保证两个一致
+    mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql的id保持一致
+-->
+
+<!--  建立数据库表和实体的映射关系-->
+    <resultMap id="goodsVo" type="com.ssm.pojo.Goods">
+        <!--主键映射-->
+        <id column="gid" property="gid"></id>
+        <!--非主键映射-->
+        <result column="goods_name" property="goodsName"></result>
+        <result column="price" property="price"></result>
+        <result column="up_time" property="upTime"></result>
+        <result column="brand_id" property="brandId"></result>
+        <result column="cate_id" property="cateId"></result>
+        <result column="goods_desc" property="goodsDesc"></result>
+        <result column="num" property="num"></result>
+    </resultMap>
+
+    <!--查询所有商品数量-->
+    <select id="findGoodsList" parameterType="hashMap" resultMap="goodsVo">
+        select * from ssm_goods limit #{indexStart},#{pageSize}
+    </select>
+    <!--查询总个数-->
+    <select id="getGoodsCount" resultType="int">
+        select count(*) from ssm_goods
+    </select>
+    <!--查询商品是否存在-->
+    <select id="findGoodsByGoodsName" parameterType="string" resultMap="goodsVo" >
+        select * from ssm_goods where goods_name= #{goodsName}
+    </select>
+    <!--库存加一，默认返回int-->
+    <update id="UpdateGoodsNum" parameterType="string"  >
+            update ssm_goods set num = num+1 where goods_name= #{goodsName}
+    </update>
+    <insert id="addGoods" parameterType="com.ssm.pojo.Goods">
+        insert into ssm_goods (goods_name,
+                                        price,
+                                        up_time,
+                                        brand_id,
+                                        cate_id,
+                                        goods_desc,
+                                        num) values(
+                                        #{goodsName},
+                                        #{price},
+                                        #{upTime},
+                                        #{brandId},
+                                        #{cateId},
+                                        #{goodsDesc},
+                                        #{num}  )
+
+    </insert>
+    <!--根据id查询商品信息-->
+    <select id="findGoodsById" parameterType="int" resultMap="goodsVo">
+        select * from ssm_goods where gid = #{gid}
+    </select>
+<!--    根据id修改商品信息-->
+    <update id="updateGoodsById" parameterType="com.ssm.pojo.Goods">
+        update ssm_goods set
+        goods_name= #{goodsName},
+        price= #{price},
+        brand_id= #{brandId},
+        cate_id= #{cateId},
+        goods_desc= #{goodsDesc},
+        num= #{num} where gid = #{gid}
+    </update>
+<!--    批量删除-->
+    <delete id="deleteGoodsByIds" parameterType="string">
+        delete from ssm_goods where gid in(${value})
+    </delete>
+
+
+</mapper>

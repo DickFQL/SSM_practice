@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--根标签-->
+<mapper namespace="com.ssm.mapper.CateMapper">
+<!--
+    mapper接口和映射文件要保证两个一致
+    mapper接口的全类名和映射文件的namespace一致
+    mapper接口中的方法的方法名要和映射文件中的sql的id保持一致
+-->
+
+<!--  建立数据库表和实体的映射关系-->
+    <resultMap id="cateVo" type="com.ssm.pojo.Cate">
+        <!--主键映射-->
+        <id column="cid" property="cid"></id>
+        <!--非主键映射-->
+        <result column="cate_name" property="cateName"></result>
+    </resultMap>
+
+    <!--int insertUser()-->
+    <select id="findCateList" resultMap="cateVo">
+        select * from ssm_cate
+    </select>
+
+</mapper>
