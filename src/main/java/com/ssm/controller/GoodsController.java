@@ -24,6 +24,7 @@ public class GoodsController {
     private PageUtils pageUtils;
 
 
+
     @RequestMapping("/toAdd")
 
     public String toAdd(Model model){
@@ -70,11 +71,16 @@ public class GoodsController {
 
 
     @RequestMapping("/list")
-    public String findGoodsList(Model model,String currentPage){
+    public String findGoodsList(Model model,String currentPage,String likeName){
         //创建hash
         HashMap<Object ,Object> hashMap = new HashMap<>();
+        if (likeName != null && !likeName.equals(""))
+        {
+            hashMap.put("likeName",likeName.trim());
+            model.addAttribute("likeName",likeName);
+        }
         /*调用分页方法*/
-        pageUtils.initData(currentPage,goodsService.getGoodsCount(),6);
+        pageUtils.initData(currentPage,goodsService.getGoodsCount(hashMap),5);
 
         hashMap.put("indexStart",pageUtils.getIndexStart());
         hashMap.put("pageSize",pageUtils.getPageSize());
@@ -91,7 +97,8 @@ public class GoodsController {
         model.addAttribute("goodsList",goodsList);
         model.addAttribute("brandList",brandList);
         model.addAttribute("cateList",cateList);
-        //将分页工具类的实例存放到域中
+
+                //将分页工具类的实例存放到域中
         model.addAttribute("pageUtils",pageUtils);
         return "list";
     }

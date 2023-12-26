@@ -62,22 +62,39 @@
 
     //将当前页的值传给服务端
     function page(currentPage){
-        location.href = "<%=path%>/goods/list?currentPage=" + currentPage;
+        let likeName = '${likeName}';
+        if (likeName != null && likeName != ""){
+            location.href = "<%=path%>/goods/list?currentPage=" + currentPage+ "&likeName="+likeName;
+        }
+        else{
+            location.href = "<%=path%>/goods/list?currentPage=" + currentPage;
+        }
+
     }
     //根据id查询商品信息
     function findGoodsById(gid){
         location.href = "<%=path%>/goods/findGoodsById?gid=" + gid;
     }
+    // 模糊查询
+
 </script>
 <body>
 <h1 align="center">商品列表</h1>
+
+<form method="post" action="<%=path%>/goods/list">
+    <input type="text" placeholder="根据姓名模糊查询" name="likeName" id="likeName" value="${likeName}">
+    <input type="submit" value="搜索" class="btn btn-info"  >
+</form>
+
 <table class="table">
 
     <tr>
         <td colspan="11" align="center">
             <input type="button" value="商品上架" class="btn btn-info">
             <input type="button" value="批量删除" class="btn btn-info">
+
         </td>
+
     </tr>
 
     <tr>

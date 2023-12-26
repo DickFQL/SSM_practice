@@ -19,7 +19,7 @@ public interface GoodsService {
      * 查询商品总个数
      * @return
      */
-    Integer getGoodsCount();
+    Integer getGoodsCount(HashMap<Object,Object> hashMap);
 
     /**
      * 查询所有分类

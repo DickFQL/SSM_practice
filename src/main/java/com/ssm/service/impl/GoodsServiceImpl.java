@@ -29,8 +29,8 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Integer getGoodsCount() {
-        return goodsMapper.getGoodsCount();
+    public Integer getGoodsCount(HashMap<Object,Object> hashMap) {
+        return goodsMapper.getGoodsCount(hashMap);
     }
 
     @Override
@@ -77,4 +77,6 @@ public class GoodsServiceImpl implements GoodsService {
     public String deleteGoodsByIds(String ids) {
         return goodsMapper.deleteGoodsByIds(ids) > 0 ? "true":"false";
     }
+
+
 }

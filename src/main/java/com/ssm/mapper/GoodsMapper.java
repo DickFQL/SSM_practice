@@ -12,7 +12,7 @@ public interface GoodsMapper {
      */
     List<Goods> findGoodsList(HashMap<Object,Object> hashMap);
 
-    Integer getGoodsCount();
+    Integer getGoodsCount(HashMap<Object,Object> hashMap);
 
     /**
      * 根据商品名称判断商品是否存在

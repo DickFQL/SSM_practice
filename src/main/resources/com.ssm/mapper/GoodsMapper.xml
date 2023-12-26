@@ -26,11 +26,22 @@
 
     <!--查询所有商品数量-->
     <select id="findGoodsList" parameterType="hashMap" resultMap="goodsVo">
-        select * from ssm_goods limit #{indexStart},#{pageSize}
+        select * from ssm_goods
+        <where>
+            <if test="likeName != null">
+                goods_name like '%${likeName}%'
+            </if>
+        </where>
+        limit #{indexStart},#{pageSize}
     </select>
     <!--查询总个数-->
-    <select id="getGoodsCount" resultType="int">
+    <select id="getGoodsCount" parameterType="hashMap" resultType="int">
         select count(*) from ssm_goods
+        <where>
+            <if test="likeName != null">
+                goods_name like '%${likeName}%'
+            </if>
+        </where>
     </select>
     <!--查询商品是否存在-->
     <select id="findGoodsByGoodsName" parameterType="string" resultMap="goodsVo" >
