@@ -71,14 +71,26 @@ public class GoodsController {
 
 
     @RequestMapping("/list")
-    public String findGoodsList(Model model,String currentPage,String likeName){
+    public String findGoodsList(Model model,String currentPage,String likeName,String uptimeBegin,String uptimeEnd){
         //创建hash
         HashMap<Object ,Object> hashMap = new HashMap<>();
+        /*将模糊值存到集合中*/
         if (likeName != null && !likeName.equals(""))
         {
             hashMap.put("likeName",likeName.trim());
             model.addAttribute("likeName",likeName);
         }
+
+        if (uptimeBegin != null && !uptimeBegin.isEmpty() && uptimeEnd != null && !uptimeEnd.isEmpty())
+        {
+            hashMap.put("uptimeBegin",uptimeBegin);
+            hashMap.put("uptimeEnd",uptimeEnd);
+            model.addAttribute("uptimeBegin",uptimeBegin);
+            model.addAttribute("uptimeEnd",uptimeEnd);
+        }
+
+
+
         /*调用分页方法*/
         pageUtils.initData(currentPage,goodsService.getGoodsCount(hashMap),5);
 

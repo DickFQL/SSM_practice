@@ -63,12 +63,17 @@
     //将当前页的值传给服务端
     function page(currentPage){
         let likeName = '${likeName}';
+        let uptimeBegin = '${uptimeBegin}';
+        let uptimeEnd = '${uptimeEnd}';
+        let url = "<%=path%>/goods/list?currentPage=" + currentPage;
         if (likeName != null && likeName != ""){
-            location.href = "<%=path%>/goods/list?currentPage=" + currentPage+ "&likeName="+likeName;
+            url +=  "&likeName="+likeName;
         }
-        else{
-            location.href = "<%=path%>/goods/list?currentPage=" + currentPage;
+        if (uptimeBegin != null && uptimeBegin != "" && uptimeEnd != null && uptimeEnd != ""){
+            url +=  "&uptimeBegin="+uptimeBegin + "&uptimeEnd="+uptimeEnd;
         }
+        location.href = url;
+
 
     }
     //根据id查询商品信息
@@ -84,6 +89,12 @@
 <form method="post" action="<%=path%>/goods/list">
     <input type="text" placeholder="根据姓名模糊查询" name="likeName" id="likeName" value="${likeName}">
     <input type="submit" value="搜索" class="btn btn-info"  >
+</form>
+
+<form method="post" action="<%=path%>/goods/list">
+    <input type="date" placeholder="开始时间" name="uptimeBegin" id="uptimeBegin" value="${uptimeBegin}">
+    <input type="date" placeholder="结束时间" name="uptimeEnd" id="uptimeEnd" value="${uptimeEnd}">
+    <input type="submit" value="查询" class="btn btn-info"  >
 </form>
 
 <table class="table">

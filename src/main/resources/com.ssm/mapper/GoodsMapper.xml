@@ -31,6 +31,9 @@
             <if test="likeName != null">
                 goods_name like '%${likeName}%'
             </if>
+            <if test="uptimeBegin != null and uptimeEnd != null">
+                and up_time between #{uptimeBegin} and #{uptimeEnd}
+            </if>
         </where>
         limit #{indexStart},#{pageSize}
     </select>
@@ -40,6 +43,9 @@
         <where>
             <if test="likeName != null">
                 goods_name like '%${likeName}%'
+            </if>
+            <if test="uptimeBegin != null and uptimeEnd != null">
+                and up_time between #{uptimeBegin} and #{uptimeEnd}
             </if>
         </where>
     </select>
